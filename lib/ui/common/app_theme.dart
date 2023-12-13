@@ -132,6 +132,17 @@ class AppTheme {
       ),
       selectedColor: AppColors.primaryColor,
     ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: AppColors.primaryColor,
+      elevation: 0,
+      selectedItemColor: AppColors.whiteColor,
+      unselectedItemColor: AppColors.greyColor,
+      showUnselectedLabels: true,
+      selectedLabelStyle: GoogleFonts.poppins(
+        fontWeight: FontWeight.bold,
+      ),
+      type: BottomNavigationBarType.fixed,
+    ),
     useMaterial3: true,
   );
 

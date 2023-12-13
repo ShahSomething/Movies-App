@@ -7,13 +7,16 @@ environment:
   sdk: '>=3.0.3 <4.0.0'
 
 dependencies:
+  animations: ^2.0.8
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.9.0
+  flutter_svg: ^2.0.9
   google_fonts: ^6.1.0
   logger: ^1.4.0
   stacked: ^3.4.0
   stacked_services: ^1.1.0
+
 
 dev_dependencies:
   build_runner: ^2.4.5
