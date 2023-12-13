@@ -8,6 +8,8 @@ environment:
 
 dependencies:
   animations: ^2.0.8
+  cached_network_image: ^3.3.0
+  control_style: ^0.1.0
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.9.0

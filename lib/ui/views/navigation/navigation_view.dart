@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies/ui/common/app_colors.dart';
 import 'package:movies/ui/common/app_icons.dart';
-import 'package:movies/ui/views/home/home_view.dart';
+import 'package:movies/ui/views/watch/watch_view.dart';
 import 'package:stacked/stacked.dart';
 
 import 'navigation_viewmodel.dart';
@@ -29,7 +29,7 @@ class NavigationView extends StackedView<NavigationViewModel> {
         },
         child: getViewForIndex(viewModel.currentIndex),
       ),
-      extendBody: true,
+      extendBody: false,
       bottomNavigationBar: Container(
         padding: const EdgeInsets.only(
           top: 10,
@@ -96,15 +96,15 @@ class NavigationView extends StackedView<NavigationViewModel> {
   Widget getViewForIndex(int index) {
     switch (index) {
       case 0:
-        return const HomeView();
-      case 1:
         return Container();
+      case 1:
+        return const WatchView();
       case 2:
         return Container();
       case 3:
         return Container();
       default:
-        return const HomeView();
+        return const WatchView();
     }
   }
 
