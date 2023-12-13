@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies/ui/common/app_colors.dart';
 import 'package:movies/ui/common/app_icons.dart';
+import 'package:movies/ui/views/under_construction/under_construction_view.dart';
 import 'package:movies/ui/views/watch/watch_view.dart';
 import 'package:stacked/stacked.dart';
 
@@ -96,13 +97,13 @@ class NavigationView extends StackedView<NavigationViewModel> {
   Widget getViewForIndex(int index) {
     switch (index) {
       case 0:
-        return Container();
+        return const UnderConstructionView();
       case 1:
         return const WatchView();
       case 2:
-        return Container();
+        return const UnderConstructionView();
       case 3:
-        return Container();
+        return const UnderConstructionView();
       default:
         return const WatchView();
     }
@@ -113,4 +114,10 @@ class NavigationView extends StackedView<NavigationViewModel> {
     BuildContext context,
   ) =>
       NavigationViewModel();
+
+  @override
+  void onViewModelReady(NavigationViewModel viewModel) {
+    viewModel.setIndex(1);
+    super.onViewModelReady(viewModel);
+  }
 }

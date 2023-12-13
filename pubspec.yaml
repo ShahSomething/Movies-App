@@ -16,6 +16,7 @@ dependencies:
   flutter_svg: ^2.0.9
   google_fonts: ^6.1.0
   logger: ^1.4.0
+  lottie: ^2.7.0
   stacked: ^3.4.0
   stacked_services: ^1.1.0
 
@@ -31,5 +32,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/
     - assets/icons/
 
