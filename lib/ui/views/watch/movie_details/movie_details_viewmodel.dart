@@ -10,15 +10,15 @@ class MovieDetailsViewModel extends BaseViewModel {
   final logger = getLogger('MovieDetailsViewModel');
 
   //Variables
-  String? trailerUrl;
+  String? videoId;
 
   //Getters
   List<Genre> get allGenres => _repositoryService.allGenres;
 
   getMovieTrailer(int movieId) async {
     setBusy(true);
-    trailerUrl = await _repositoryService.fetchMovieTrailer(movieId);
-    logger.i('Trailer Url: $trailerUrl');
+    videoId = await _repositoryService.fetchMovieTrailer(movieId);
+    logger.i('Trailer Url: $videoId');
     setBusy(false);
   }
 }

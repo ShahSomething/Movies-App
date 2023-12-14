@@ -113,7 +113,7 @@ class StackedRouter extends _i1.RouterBase {
     _i7.TrailerView: (data) {
       final args = data.getArgs<TrailerViewArguments>(nullOk: false);
       return _i9.MaterialPageRoute<dynamic>(
-        builder: (context) => _i7.TrailerView(args.trailerUrl, key: args.key),
+        builder: (context) => _i7.TrailerView(args.videoId, key: args.key),
         settings: data,
       );
     },
@@ -161,28 +161,28 @@ class MovieDetailsViewArguments {
 
 class TrailerViewArguments {
   const TrailerViewArguments({
-    required this.trailerUrl,
+    required this.videoId,
     this.key,
   });
 
-  final String trailerUrl;
+  final String videoId;
 
   final _i9.Key? key;
 
   @override
   String toString() {
-    return '{"trailerUrl": "$trailerUrl", "key": "$key"}';
+    return '{"videoId": "$videoId", "key": "$key"}';
   }
 
   @override
   bool operator ==(covariant TrailerViewArguments other) {
     if (identical(this, other)) return true;
-    return other.trailerUrl == trailerUrl && other.key == key;
+    return other.videoId == videoId && other.key == key;
   }
 
   @override
   int get hashCode {
-    return trailerUrl.hashCode ^ key.hashCode;
+    return videoId.hashCode ^ key.hashCode;
   }
 }
 
@@ -261,7 +261,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> navigateToTrailerView({
-    required String trailerUrl,
+    required String videoId,
     _i9.Key? key,
     int? routerId,
     bool preventDuplicates = true,
@@ -270,7 +270,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
         transition,
   }) async {
     return navigateTo<dynamic>(Routes.trailerView,
-        arguments: TrailerViewArguments(trailerUrl: trailerUrl, key: key),
+        arguments: TrailerViewArguments(videoId: videoId, key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -365,7 +365,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
   }
 
   Future<dynamic> replaceWithTrailerView({
-    required String trailerUrl,
+    required String videoId,
     _i9.Key? key,
     int? routerId,
     bool preventDuplicates = true,
@@ -374,7 +374,7 @@ extension NavigatorStateExtension on _i11.NavigationService {
         transition,
   }) async {
     return replaceWith<dynamic>(Routes.trailerView,
-        arguments: TrailerViewArguments(trailerUrl: trailerUrl, key: key),
+        arguments: TrailerViewArguments(videoId: videoId, key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

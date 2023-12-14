@@ -29,7 +29,7 @@ class MovieDetailsView extends StackedView<MovieDetailsViewModel> {
             title: child!,
             movie: movie,
             isTrailerLoading: viewModel.isBusy,
-            trailerUrl: viewModel.trailerUrl,
+            videoId: viewModel.videoId,
           ),
           SliverPadding(
             padding: EdgeInsets.all(20.sp),

@@ -13,7 +13,6 @@ dependencies:
   cached_network_image: ^3.3.0
   control_style: ^0.1.0
   dio: ^5.4.0
-  flick_video_player: ^0.7.0
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.9.0
@@ -25,7 +24,7 @@ dependencies:
   lottie: ^2.7.0
   stacked: ^3.4.0
   stacked_services: ^1.1.0
-  video_player: ^2.8.1
+  youtube_player_flutter: ^8.1.2
 
 
 dev_dependencies:

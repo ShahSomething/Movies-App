@@ -117,8 +117,7 @@ class RepositoryService with ListenableServiceMixin {
     if (response != null) {
       if (response.data['results'].length > 0) {
         var trailerKey = response.data['results'][0]['key'];
-        String trailerUrl = "https://www.youtube.com/watch?v=$trailerKey";
-        return trailerUrl;
+        return trailerKey;
       } else {
         _snackbarService.showCustomSnackBar(
           message: "No trailer found",

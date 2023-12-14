@@ -15,12 +15,12 @@ class MySliverAppBar extends StatelessWidget {
       {super.key,
       required this.title,
       required this.movie,
-      this.trailerUrl,
+      this.videoId,
       required this.isTrailerLoading});
 
   final Widget title;
   final Movie movie;
-  final String? trailerUrl;
+  final String? videoId;
   final bool isTrailerLoading;
 
   String formatDate(DateTime date) {
@@ -70,17 +70,17 @@ class MySliverAppBar extends StatelessWidget {
                   backgroundColor: AppColors.primaryColor,
                   foregroundColor: AppColors.whiteColor,
                 ),
-                onPressed: trailerUrl != null
+                onPressed: videoId != null
                     ? () {
                         locator<NavigationService>().navigateToTrailerView(
-                          trailerUrl: trailerUrl!,
+                          videoId: videoId!,
                         );
                       }
                     : null,
                 icon: isTrailerLoading
                     ? const CircularProgressIndicator.adaptive()
                     : Icon(
-                        trailerUrl != null
+                        videoId != null
                             ? Icons.play_arrow_rounded
                             : Icons.warning_amber_rounded,
                       ),
@@ -122,21 +122,21 @@ class MySliverAppBar extends StatelessWidget {
                 ),
                 10.verticalSpace,
                 OutlinedButton.icon(
-                  onPressed: trailerUrl != null
+                  onPressed: videoId != null
                       ? () {
                           locator<NavigationService>().navigateToTrailerView(
-                            trailerUrl: trailerUrl!,
+                            videoId: videoId!,
                           );
                         }
                       : null,
                   icon: isTrailerLoading
                       ? const CircularProgressIndicator.adaptive()
-                      : Icon(trailerUrl != null
+                      : Icon(videoId != null
                           ? Icons.play_arrow_rounded
                           : Icons.warning_amber_rounded),
                   label: Text(isTrailerLoading
                       ? "Loading..."
-                      : trailerUrl != null
+                      : videoId != null
                           ? "Watch Trailer"
                           : "Trailer not found"),
                 )

@@ -1,33 +1,32 @@
 import 'package:flutter/services.dart';
-import 'package:movies/app/app.locator.dart';
 import 'package:stacked/stacked.dart';
-import 'package:flick_video_player/flick_video_player.dart';
-import 'package:stacked_services/stacked_services.dart';
-import 'package:video_player/video_player.dart';
+
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class TrailerViewModel extends BaseViewModel {
-  final NavigationService _navigationService = locator<NavigationService>();
-  late FlickManager flickManager;
+  late YoutubePlayerController youtubePlayerController;
 
-  void init(String trailerUrl) {
+  void init(String videoId) async {
     setBusy(true);
-    flickManager = FlickManager(
-      videoPlayerController: VideoPlayerController.networkUrl(
-        Uri.parse(trailerUrl),
+    youtubePlayerController = YoutubePlayerController(
+      initialVideoId: videoId,
+      flags: const YoutubePlayerFlags(
+        autoPlay: true,
       ),
     );
     setBusy(false);
-    flickManager.onVideoEnd = () {
-      _navigationService.back();
-    };
+  }
+
+  void onExitFullScreen() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   }
 
   @override
   void dispose() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: SystemUiOverlay.values);
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    flickManager.dispose();
+    onExitFullScreen();
+    youtubePlayerController.dispose();
     super.dispose();
   }
 }
