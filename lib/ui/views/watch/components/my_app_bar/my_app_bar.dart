@@ -40,11 +40,16 @@ class MyAppBar extends StackedView<MyAppBarModel>
           secondChild: SizedBox(
             width: 1.sw - 40,
             child: CustomTextField(
+              controller: viewModel.searchController,
               hintText: "TV Shows, Movies and more",
               prefix: SvgPicture.asset(AppIcons.searchIcon),
+              onChanged: (query) {
+                viewModel.searchWithDelay(query!);
+              },
               suffix: GestureDetector(
                 onTap: () {
                   viewModel.showSearchBar = false;
+                  viewModel.onTypingStop();
                 },
                 child: const Icon(
                   Icons.close,

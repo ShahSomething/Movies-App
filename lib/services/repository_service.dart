@@ -6,15 +6,22 @@ import 'package:movies/models/movie.dart';
 import 'package:movies/services/api_service.dart';
 import 'package:movies/ui/common/api_endpoints.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class RepositoryService {
+class RepositoryService with ListenableServiceMixin {
   RepositoryService() {
     fetchUpcomingMoviesPage(1);
     fetchAllGenres();
-    moviesPagingController.addPageRequestListener((pageKey) {
-      fetchUpcomingMoviesPage(pageKey);
-    });
+    resetMoviesPagingController();
+
+    listenToReactiveValues([
+      _showSearchBar,
+      _allGenres,
+      _isTyping,
+      _searchedMovies,
+      _isSearchLoading
+    ]);
   }
   //Services
   final ApiService _apiService = locator<ApiService>();
@@ -22,7 +29,39 @@ class RepositoryService {
   final SnackbarService _snackbarService = locator<SnackbarService>();
 
   //Variables
-  List<Genre> allGenres = [];
+  final List<Genre> _allGenres = [];
+  bool _showSearchBar = false;
+  bool _isTyping = false;
+  List<Movie> _searchedMovies = [];
+  bool _isSearchLoading = false;
+
+  //Getters
+  bool get showSearchBar => _showSearchBar;
+  List<Genre> get allGenres => _allGenres;
+  bool get isTyping => _isTyping;
+  List<Movie> get searchedMovies => _searchedMovies;
+  bool get isSearchLoading => _isSearchLoading;
+
+  //Setters
+  set showSearchBar(bool value) {
+    _showSearchBar = value;
+    notifyListeners();
+  }
+
+  set searchedMovies(List<Movie> movies) {
+    _searchedMovies = movies;
+    notifyListeners();
+  }
+
+  set isTyping(bool value) {
+    _isTyping = value;
+    notifyListeners();
+  }
+
+  set isSearchLoading(bool value) {
+    _isSearchLoading = value;
+    notifyListeners();
+  }
 
   //Controllers
   final PagingController<int, Movie> moviesPagingController =
@@ -59,8 +98,9 @@ class RepositoryService {
     final response = await _apiService.get(endPoint: ApiEndPoints.genreList);
     if (response != null) {
       response.data['genres'].forEach((genre) {
-        allGenres.add(Genre.fromMap(genre));
+        _allGenres.add(Genre.fromMap(genre));
       });
+      notifyListeners();
     } else {
       _logger.wtf("Response is null");
       _snackbarService.showCustomSnackBar(
@@ -94,6 +134,38 @@ class RepositoryService {
       );
       return null;
     }
+  }
+
+  searchMovies(String query) {
+    isSearchLoading = true;
+    _fetchSearchedMoviesPage(1, query);
+  }
+
+  _fetchSearchedMoviesPage(int page, String query) async {
+    final response = await _apiService.get(
+        endPoint: ApiEndPoints.search,
+        params: {"page": page, "query": query, "language": "en-US"});
+    if (response != null) {
+      List<Movie> newMovies = [];
+      response.data['results'].forEach((movie) {
+        newMovies.add(Movie.fromMap(movie));
+      });
+      searchedMovies = newMovies;
+    } else {
+      _logger.wtf("Response is null");
+      _snackbarService.showCustomSnackBar(
+        message: "Couldn't fetch movies",
+        variant: SnackbarType.error,
+      );
+    }
+    isSearchLoading = false;
+  }
+
+  resetMoviesPagingController() {
+    moviesPagingController.addPageRequestListener((pageKey) {
+      fetchUpcomingMoviesPage(pageKey);
+    });
+    moviesPagingController.refresh();
   }
 
   dispose() {

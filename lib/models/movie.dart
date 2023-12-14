@@ -9,7 +9,7 @@ class Movie {
   final String originalTitle;
   final String overview;
   final double popularity;
-  final String posterPath;
+  final String? posterPath;
   final DateTime releaseDate;
   final String title;
   final bool video;
@@ -24,7 +24,7 @@ class Movie {
     required this.originalTitle,
     required this.overview,
     required this.popularity,
-    required this.posterPath,
+    this.posterPath,
     required this.releaseDate,
     required this.title,
     required this.video,
@@ -76,8 +76,10 @@ class Movie {
       originalTitle: map['original_title'] as String,
       overview: map['overview'] as String,
       popularity: map['popularity'] as double,
-      posterPath: map['poster_path'] as String,
-      releaseDate: DateTime.parse(map['release_date']),
+      posterPath: map['poster_path'],
+      releaseDate: map['release_date'].isNotEmpty
+          ? DateTime.parse(map['release_date'])
+          : DateTime.now(),
       title: map['title'] as String,
       video: map['video'] as bool,
       voteAverage: map['vote_average'] as double,

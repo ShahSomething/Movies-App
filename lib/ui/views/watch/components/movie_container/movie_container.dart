@@ -22,7 +22,7 @@ class MovieContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String imagePath = movie.backdropPath ?? movie.posterPath;
+    String imagePath = movie.backdropPath ?? movie.posterPath ?? "";
     String imageUrl = imagesBaseUrl + imagePath;
     return SizedBox(
       height: height,

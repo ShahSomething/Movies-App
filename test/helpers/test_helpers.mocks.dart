@@ -13,8 +13,8 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart'
 import 'package:logger/src/logger.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
-import 'package:movies/models/genre.dart' as _i12;
-import 'package:movies/models/movie.dart' as _i13;
+import 'package:movies/models/genre.dart' as _i13;
+import 'package:movies/models/movie.dart' as _i12;
 import 'package:movies/services/api_service.dart' as _i10;
 import 'package:movies/services/repository_service.dart' as _i11;
 import 'package:stacked_services/stacked_services.dart' as _i5;
@@ -773,34 +773,96 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
 /// See the documentation for Mockito's code generation for more information.
 class MockRepositoryService extends _i1.Mock implements _i11.RepositoryService {
   @override
-  List<_i12.Genre> get allGenres => (super.noSuchMethod(
-        Invocation.getter(#allGenres),
-        returnValue: <_i12.Genre>[],
-        returnValueForMissingStub: <_i12.Genre>[],
-      ) as List<_i12.Genre>);
+  _i4.PagingController<int, _i12.Movie> get moviesPagingController =>
+      (super.noSuchMethod(
+        Invocation.getter(#moviesPagingController),
+        returnValue: _FakePagingController_2<int, _i12.Movie>(
+          this,
+          Invocation.getter(#moviesPagingController),
+        ),
+        returnValueForMissingStub: _FakePagingController_2<int, _i12.Movie>(
+          this,
+          Invocation.getter(#moviesPagingController),
+        ),
+      ) as _i4.PagingController<int, _i12.Movie>);
 
   @override
-  set allGenres(List<_i12.Genre>? _allGenres) => super.noSuchMethod(
+  bool get showSearchBar => (super.noSuchMethod(
+        Invocation.getter(#showSearchBar),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  List<_i13.Genre> get allGenres => (super.noSuchMethod(
+        Invocation.getter(#allGenres),
+        returnValue: <_i13.Genre>[],
+        returnValueForMissingStub: <_i13.Genre>[],
+      ) as List<_i13.Genre>);
+
+  @override
+  bool get isTyping => (super.noSuchMethod(
+        Invocation.getter(#isTyping),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  List<_i12.Movie> get searchedMovies => (super.noSuchMethod(
+        Invocation.getter(#searchedMovies),
+        returnValue: <_i12.Movie>[],
+        returnValueForMissingStub: <_i12.Movie>[],
+      ) as List<_i12.Movie>);
+
+  @override
+  bool get isSearchLoading => (super.noSuchMethod(
+        Invocation.getter(#isSearchLoading),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  set showSearchBar(bool? value) => super.noSuchMethod(
         Invocation.setter(
-          #allGenres,
-          _allGenres,
+          #showSearchBar,
+          value,
         ),
         returnValueForMissingStub: null,
       );
 
   @override
-  _i4.PagingController<int, _i13.Movie> get moviesPagingController =>
-      (super.noSuchMethod(
-        Invocation.getter(#moviesPagingController),
-        returnValue: _FakePagingController_2<int, _i13.Movie>(
-          this,
-          Invocation.getter(#moviesPagingController),
+  set searchedMovies(List<_i12.Movie>? movies) => super.noSuchMethod(
+        Invocation.setter(
+          #searchedMovies,
+          movies,
         ),
-        returnValueForMissingStub: _FakePagingController_2<int, _i13.Movie>(
-          this,
-          Invocation.getter(#moviesPagingController),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set isTyping(bool? value) => super.noSuchMethod(
+        Invocation.setter(
+          #isTyping,
+          value,
         ),
-      ) as _i4.PagingController<int, _i13.Movie>);
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set isSearchLoading(bool? value) => super.noSuchMethod(
+        Invocation.setter(
+          #isSearchLoading,
+          value,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  int get listenersCount => (super.noSuchMethod(
+        Invocation.getter(#listenersCount),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
 
   @override
   dynamic fetchUpcomingMoviesPage(int? page) => super.noSuchMethod(
@@ -820,4 +882,50 @@ class MockRepositoryService extends _i1.Mock implements _i11.RepositoryService {
         returnValue: _i8.Future<String?>.value(),
         returnValueForMissingStub: _i8.Future<String?>.value(),
       ) as _i8.Future<String?>);
+
+  @override
+  dynamic searchMovies(String? query) => super.noSuchMethod(
+        Invocation.method(
+          #searchMovies,
+          [query],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void listenToReactiveValues(List<dynamic>? reactiveValues) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #listenToReactiveValues,
+          [reactiveValues],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 }
