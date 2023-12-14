@@ -60,7 +60,10 @@ class MySliverAppBar extends StatelessWidget {
                   backgroundColor: AppColors.primaryColor,
                   foregroundColor: AppColors.whiteColor,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  locator<NavigationService>()
+                      .navigateToSeatBookingView(movie: movie);
+                },
                 icon: const Icon(
                   Icons.book_online_rounded,
                 ),
@@ -117,7 +120,10 @@ class MySliverAppBar extends StatelessWidget {
                 ),
                 10.verticalSpace,
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    locator<NavigationService>()
+                        .navigateToSeatBookingView(movie: movie);
+                  },
                   child: const Text("Get Tickets"),
                 ),
                 10.verticalSpace,

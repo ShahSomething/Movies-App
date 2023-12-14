@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/ui/common/app_colors.dart';
 
 import 'package:stacked/stacked.dart';
@@ -21,6 +22,7 @@ class TrailerView extends StackedView<TrailerViewModel> {
         ? const CircularProgressIndicator.adaptive()
         : YoutubePlayerBuilder(
             player: YoutubePlayer(
+              width: 1.sw,
               controller: viewModel.youtubePlayerController,
               showVideoProgressIndicator: true,
               progressColors: const ProgressBarColors(
@@ -28,15 +30,13 @@ class TrailerView extends StackedView<TrailerViewModel> {
                 handleColor: AppColors.skyBlueColor,
               ),
               onEnded: (metaData) {
-                viewModel.onExitFullScreen();
-                Navigator.pop(context);
+                viewModel.youtubePlayerController.toggleFullScreenMode();
               },
               topActions: [
                 const Spacer(),
                 FilledButton(
                   onPressed: () {
-                    viewModel.onExitFullScreen();
-                    Navigator.pop(context);
+                    viewModel.youtubePlayerController.toggleFullScreenMode();
                   },
                   child: const Text("Done"),
                 ),
@@ -47,7 +47,6 @@ class TrailerView extends StackedView<TrailerViewModel> {
             },
             onExitFullScreen: () {
               viewModel.onExitFullScreen();
-              Navigator.pop(context);
             },
           );
   }
