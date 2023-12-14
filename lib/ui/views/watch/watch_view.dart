@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:movies/models/movie.dart';
+import 'package:movies/ui/common/app_colors.dart';
 import 'package:movies/ui/views/watch/components/movie_container/movie_container.dart';
 import 'package:movies/ui/views/watch/components/my_app_bar/my_app_bar.dart';
 import 'package:stacked/stacked.dart';
@@ -17,13 +20,46 @@ class WatchView extends StackedView<WatchViewModel> {
   ) {
     return Scaffold(
       appBar: const MyAppBar(),
-      body: ListView.separated(
-        padding: EdgeInsets.all(20.sp),
-        itemBuilder: (context, index) {
-          return const MovieContainer();
-        },
-        separatorBuilder: (context, index) => 10.verticalSpace,
-        itemCount: 10,
+      body: RefreshIndicator(
+        onRefresh: viewModel.refreshMovies,
+        child: PagedListView.separated(
+          pagingController: viewModel.moviesPagingController,
+          padding: EdgeInsets.symmetric(
+            horizontal: 24.w,
+            vertical: 10.h,
+          ),
+          builderDelegate: PagedChildBuilderDelegate<Movie>(
+            firstPageProgressIndicatorBuilder: (context) {
+              return const Center(
+                child: CircularProgressIndicator.adaptive(),
+              );
+            },
+            itemBuilder: (context, movie, index) {
+              return MovieContainer(
+                movie: movie,
+              );
+            },
+            firstPageErrorIndicatorBuilder: (context) {
+              return Center(
+                child: Text(
+                  "Something went wrong",
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppColors.blackColor,
+                      ),
+                ),
+              );
+            },
+            noItemsFoundIndicatorBuilder: (context) => Center(
+              child: Text(
+                "No upcoming movies",
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: AppColors.blackColor,
+                    ),
+              ),
+            ),
+          ),
+          separatorBuilder: (context, index) => 10.verticalSpace,
+        ),
       ),
     );
   }

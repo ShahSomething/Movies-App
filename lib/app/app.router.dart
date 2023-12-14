@@ -7,12 +7,12 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:flutter/material.dart' as _i7;
 import 'package:flutter/material.dart';
-import 'package:movies/ui/views/watch/movie_details/movie_details_view.dart'
-    as _i6;
 import 'package:movies/ui/views/navigation/navigation_view.dart' as _i3;
 import 'package:movies/ui/views/startup/startup_view.dart' as _i2;
 import 'package:movies/ui/views/under_construction/under_construction_view.dart'
     as _i5;
+import 'package:movies/ui/views/watch/movie_details/movie_details_view.dart'
+    as _i6;
 import 'package:movies/ui/views/watch/watch_view.dart' as _i4;
 import 'package:stacked/stacked.dart' as _i1;
 import 'package:stacked_services/stacked_services.dart' as _i8;

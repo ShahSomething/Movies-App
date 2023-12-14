@@ -3,19 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/app/app.locator.dart';
 import 'package:movies/app/app.router.dart';
+import 'package:movies/models/movie.dart';
 import 'package:movies/ui/common/app_colors.dart';
-import 'package:movies/ui/common/my_utils.dart';
+import 'package:movies/ui/common/app_strings.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class MovieContainer extends StatelessWidget {
   const MovieContainer(
-      {super.key, this.height = 180, this.width = double.infinity});
+      {super.key,
+      this.height = 180,
+      this.width = double.infinity,
+      required this.movie});
 
   final double height;
   final double width;
 
+  final Movie movie;
+
   @override
   Widget build(BuildContext context) {
+    String imageUrl = imagesBaseUrl + movie.posterPath;
     return SizedBox(
       height: height,
       width: width,
@@ -43,26 +50,26 @@ class MovieContainer extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "The King's Man",
+                  movie.originalTitle,
                   style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                         color: AppColors.whiteColor,
                       ),
                 ),
               ),
             ),
-            child: CachedNetworkImage(
-              imageUrl: MyUtils.getTempLink(
-                height: height.toInt(),
-                width: 1.sw.toInt(),
+            child: Hero(
+              tag: movie.posterPath,
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
+                fit: BoxFit.cover,
+                progressIndicatorBuilder: (context, url, progress) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: progress.progress,
+                    ),
+                  );
+                },
               ),
-              fit: BoxFit.cover,
-              progressIndicatorBuilder: (context, url, progress) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    value: progress.progress,
-                  ),
-                );
-              },
             ),
           ),
         ),
