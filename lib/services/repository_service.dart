@@ -70,6 +70,32 @@ class RepositoryService {
     }
   }
 
+  Future<String?> fetchMovieTrailer(int movieId) async {
+    final response = await _apiService.get(
+      endPoint: "movie/$movieId/videos",
+    );
+    if (response != null) {
+      if (response.data['results'].length > 0) {
+        var trailerKey = response.data['results'][0]['key'];
+        String trailerUrl = "https://www.youtube.com/watch?v=$trailerKey";
+        return trailerUrl;
+      } else {
+        _snackbarService.showCustomSnackBar(
+          message: "No trailer found",
+          variant: SnackbarType.error,
+        );
+        return null;
+      }
+    } else {
+      _logger.wtf("Response is null");
+      _snackbarService.showCustomSnackBar(
+        message: "Couldn't fetch movie trailer",
+        variant: SnackbarType.error,
+      );
+      return null;
+    }
+  }
+
   dispose() {
     moviesPagingController.dispose();
   }

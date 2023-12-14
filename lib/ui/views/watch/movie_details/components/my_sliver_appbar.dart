@@ -2,16 +2,26 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:movies/app/app.locator.dart';
+import 'package:movies/app/app.router.dart';
 import 'package:movies/models/movie.dart';
 import 'package:movies/ui/common/app_colors.dart';
 import 'package:movies/ui/common/app_strings.dart';
 import 'package:movies/ui/widgets/common/invisible%20header/invisible_header.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class MySliverAppBar extends StatelessWidget {
-  const MySliverAppBar({super.key, required this.title, required this.movie});
+  const MySliverAppBar(
+      {super.key,
+      required this.title,
+      required this.movie,
+      this.trailerUrl,
+      required this.isTrailerLoading});
 
   final Widget title;
   final Movie movie;
+  final String? trailerUrl;
+  final bool isTrailerLoading;
 
   String formatDate(DateTime date) {
     DateFormat formatter = DateFormat('MMMM dd, yyyy');
@@ -60,10 +70,20 @@ class MySliverAppBar extends StatelessWidget {
                   backgroundColor: AppColors.primaryColor,
                   foregroundColor: AppColors.whiteColor,
                 ),
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.play_arrow_rounded,
-                ),
+                onPressed: trailerUrl != null
+                    ? () {
+                        locator<NavigationService>().navigateToTrailerView(
+                          trailerUrl: trailerUrl!,
+                        );
+                      }
+                    : null,
+                icon: isTrailerLoading
+                    ? const CircularProgressIndicator.adaptive()
+                    : Icon(
+                        trailerUrl != null
+                            ? Icons.play_arrow_rounded
+                            : Icons.warning_amber_rounded,
+                      ),
               ),
               10.horizontalSpace,
             ],
@@ -102,9 +122,23 @@ class MySliverAppBar extends StatelessWidget {
                 ),
                 10.verticalSpace,
                 OutlinedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.play_arrow_rounded),
-                  label: const Text("Watch Trailer"),
+                  onPressed: trailerUrl != null
+                      ? () {
+                          locator<NavigationService>().navigateToTrailerView(
+                            trailerUrl: trailerUrl!,
+                          );
+                        }
+                      : null,
+                  icon: isTrailerLoading
+                      ? const CircularProgressIndicator.adaptive()
+                      : Icon(trailerUrl != null
+                          ? Icons.play_arrow_rounded
+                          : Icons.warning_amber_rounded),
+                  label: Text(isTrailerLoading
+                      ? "Loading..."
+                      : trailerUrl != null
+                          ? "Watch Trailer"
+                          : "Trailer not found"),
                 )
               ],
             ),

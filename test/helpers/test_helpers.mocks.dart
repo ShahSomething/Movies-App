@@ -13,7 +13,8 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart'
 import 'package:logger/src/logger.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
-import 'package:movies/models/movie.dart' as _i12;
+import 'package:movies/models/genre.dart' as _i12;
+import 'package:movies/models/movie.dart' as _i13;
 import 'package:movies/services/api_service.dart' as _i10;
 import 'package:movies/services/repository_service.dart' as _i11;
 import 'package:stacked_services/stacked_services.dart' as _i5;
@@ -772,18 +773,34 @@ class MockApiService extends _i1.Mock implements _i10.ApiService {
 /// See the documentation for Mockito's code generation for more information.
 class MockRepositoryService extends _i1.Mock implements _i11.RepositoryService {
   @override
-  _i4.PagingController<int, _i12.Movie> get moviesPagingController =>
+  List<_i12.Genre> get allGenres => (super.noSuchMethod(
+        Invocation.getter(#allGenres),
+        returnValue: <_i12.Genre>[],
+        returnValueForMissingStub: <_i12.Genre>[],
+      ) as List<_i12.Genre>);
+
+  @override
+  set allGenres(List<_i12.Genre>? _allGenres) => super.noSuchMethod(
+        Invocation.setter(
+          #allGenres,
+          _allGenres,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i4.PagingController<int, _i13.Movie> get moviesPagingController =>
       (super.noSuchMethod(
         Invocation.getter(#moviesPagingController),
-        returnValue: _FakePagingController_2<int, _i12.Movie>(
+        returnValue: _FakePagingController_2<int, _i13.Movie>(
           this,
           Invocation.getter(#moviesPagingController),
         ),
-        returnValueForMissingStub: _FakePagingController_2<int, _i12.Movie>(
+        returnValueForMissingStub: _FakePagingController_2<int, _i13.Movie>(
           this,
           Invocation.getter(#moviesPagingController),
         ),
-      ) as _i4.PagingController<int, _i12.Movie>);
+      ) as _i4.PagingController<int, _i13.Movie>);
 
   @override
   dynamic fetchUpcomingMoviesPage(int? page) => super.noSuchMethod(
@@ -793,4 +810,14 @@ class MockRepositoryService extends _i1.Mock implements _i11.RepositoryService {
         ),
         returnValueForMissingStub: null,
       );
+
+  @override
+  _i8.Future<String?> fetchMovieTrailer(int? movieId) => (super.noSuchMethod(
+        Invocation.method(
+          #fetchMovieTrailer,
+          [movieId],
+        ),
+        returnValue: _i8.Future<String?>.value(),
+        returnValueForMissingStub: _i8.Future<String?>.value(),
+      ) as _i8.Future<String?>);
 }

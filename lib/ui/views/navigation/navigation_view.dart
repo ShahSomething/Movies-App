@@ -79,10 +79,7 @@ class NavigationView extends StackedView<NavigationViewModel> {
           iconPath,
           height: 18.h,
           width: 18.w,
-          colorFilter: ColorFilter.mode(
-            isActive ? AppColors.whiteColor : AppColors.greyColor,
-            BlendMode.srcIn,
-          ),
+          color: isActive ? AppColors.whiteColor : AppColors.greyColor,
         ),
       );
     }

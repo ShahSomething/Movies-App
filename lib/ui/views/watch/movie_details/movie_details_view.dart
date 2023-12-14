@@ -28,6 +28,8 @@ class MovieDetailsView extends StackedView<MovieDetailsViewModel> {
           MySliverAppBar(
             title: child!,
             movie: movie,
+            isTrailerLoading: viewModel.isBusy,
+            trailerUrl: viewModel.trailerUrl,
           ),
           SliverPadding(
             padding: EdgeInsets.all(20.sp),
@@ -88,5 +90,11 @@ class MovieDetailsView extends StackedView<MovieDetailsViewModel> {
       textAlign: TextAlign.center,
       maxLines: 1,
     );
+  }
+
+  @override
+  void onViewModelReady(MovieDetailsViewModel viewModel) {
+    viewModel.getMovieTrailer(movie.id);
+    super.onViewModelReady(viewModel);
   }
 }
