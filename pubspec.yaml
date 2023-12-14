@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   animations: ^2.0.8
+  auto_size_text: ^3.0.0
   cached_network_image: ^3.3.0
   control_style: ^0.1.0
   flutter:
