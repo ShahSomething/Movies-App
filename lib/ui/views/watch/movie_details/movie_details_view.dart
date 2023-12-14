@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movies/models/genre.dart';
+import 'package:movies/models/movie.dart';
 import 'package:movies/ui/common/app_colors.dart';
 import 'package:movies/ui/common/ui_helpers.dart';
 import 'package:movies/ui/views/watch/movie_details/components/my_sliver_appbar.dart';
@@ -10,7 +12,9 @@ import 'package:stacked/stacked.dart';
 import 'movie_details_viewmodel.dart';
 
 class MovieDetailsView extends StackedView<MovieDetailsViewModel> {
-  const MovieDetailsView({Key? key}) : super(key: key);
+  const MovieDetailsView(this.movie, {Key? key}) : super(key: key);
+
+  final Movie movie;
 
   @override
   Widget builder(
@@ -21,7 +25,10 @@ class MovieDetailsView extends StackedView<MovieDetailsViewModel> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          MySliverAppBar(child: child!),
+          MySliverAppBar(
+            title: child!,
+            movie: movie,
+          ),
           SliverPadding(
             padding: EdgeInsets.all(20.sp),
             sliver: SliverList.list(
@@ -34,24 +41,15 @@ class MovieDetailsView extends StackedView<MovieDetailsViewModel> {
                 Wrap(
                   runSpacing: 7.h,
                   spacing: 7.w,
-                  children: const [
-                    GenreContainer(
-                      color: AppColors.lightGreenColor,
-                      genre: "Action",
-                    ),
-                    GenreContainer(
-                      color: AppColors.pinkColor,
-                      genre: "Thriller",
-                    ),
-                    GenreContainer(
-                      color: AppColors.purpleColor,
-                      genre: "Science",
-                    ),
-                    GenreContainer(
-                      color: AppColors.darkYellowColor,
-                      genre: "Fiction",
-                    ),
-                  ],
+                  children: movie.genreIds.map((genreId) {
+                    var genre = viewModel.allGenres.firstWhere(
+                        (genre) => genre.id == genreId,
+                        orElse: () =>
+                            Genre(id: 0, name: 'Unknown', color: Colors.red));
+                    return GenreContainer(
+                      genre: genre,
+                    );
+                  }).toList(),
                 ),
                 spacedDivider,
                 Text(
@@ -60,8 +58,7 @@ class MovieDetailsView extends StackedView<MovieDetailsViewModel> {
                 ),
                 20.verticalSpace,
                 Text(
-                  "As a collection of history's worst tyrants and criminal masterminds gather to plot a war to wipe out millions, one man must race against time to stop them. Discover the origins of the very first independent intelligence agency in The King's Man. The Comic Book “The Secret Service” by Mark Millar and Dave Gibbons." *
-                      4,
+                  movie.overview,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.greyColor,
                       ),
@@ -83,7 +80,7 @@ class MovieDetailsView extends StackedView<MovieDetailsViewModel> {
   @override
   Widget? staticChildBuilder(BuildContext context) {
     return AutoSizeText(
-      "Movie Name",
+      movie.originalTitle,
       style: Theme.of(context)
           .textTheme
           .headlineLarge

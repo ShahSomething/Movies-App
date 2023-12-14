@@ -1,6 +1,7 @@
 import 'package:movies/app/app.locator.dart';
 import 'package:movies/app/app.logger.dart';
 import 'package:movies/app/app.snackbars.dart';
+import 'package:movies/models/genre.dart';
 import 'package:movies/models/movie.dart';
 import 'package:movies/services/api_service.dart';
 import 'package:movies/ui/common/api_endpoints.dart';
@@ -10,6 +11,7 @@ import 'package:stacked_services/stacked_services.dart';
 class RepositoryService {
   RepositoryService() {
     fetchUpcomingMoviesPage(1);
+    fetchAllGenres();
     moviesPagingController.addPageRequestListener((pageKey) {
       fetchUpcomingMoviesPage(pageKey);
     });
@@ -18,6 +20,9 @@ class RepositoryService {
   final ApiService _apiService = locator<ApiService>();
   final _logger = getLogger("RepositoryService");
   final SnackbarService _snackbarService = locator<SnackbarService>();
+
+  //Variables
+  List<Genre> allGenres = [];
 
   //Controllers
   final PagingController<int, Movie> moviesPagingController =
@@ -45,6 +50,21 @@ class RepositoryService {
       _logger.wtf("Response is null");
       _snackbarService.showCustomSnackBar(
         message: "Couldn't fetch movies",
+        variant: SnackbarType.error,
+      );
+    }
+  }
+
+  fetchAllGenres() async {
+    final response = await _apiService.get(endPoint: ApiEndPoints.genreList);
+    if (response != null) {
+      response.data['genres'].forEach((genre) {
+        allGenres.add(Genre.fromMap(genre));
+      });
+    } else {
+      _logger.wtf("Response is null");
+      _snackbarService.showCustomSnackBar(
+        message: "Couldn't fetch genres",
         variant: SnackbarType.error,
       );
     }

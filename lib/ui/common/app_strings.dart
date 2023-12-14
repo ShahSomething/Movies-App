@@ -1,1 +1,1 @@
-const String imagesBaseUrl = "https://image.tmdb.org/t/p/w500";
+const String imagesBaseUrl = "https://image.tmdb.org/t/p/original";

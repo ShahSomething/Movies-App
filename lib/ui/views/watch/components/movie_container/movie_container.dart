@@ -22,14 +22,17 @@ class MovieContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String imageUrl = imagesBaseUrl + movie.posterPath;
+    String imagePath = movie.backdropPath ?? movie.posterPath;
+    String imageUrl = imagesBaseUrl + imagePath;
     return SizedBox(
       height: height,
       width: width,
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: () {
-          locator<NavigationService>().navigateToMovieDetailsView();
+          locator<NavigationService>().navigateToMovieDetailsView(
+            movie: movie,
+          );
         },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
@@ -58,10 +61,10 @@ class MovieContainer extends StatelessWidget {
               ),
             ),
             child: Hero(
-              tag: movie.posterPath,
+              tag: imagePath,
               child: CachedNetworkImage(
                 imageUrl: imageUrl,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
                 progressIndicatorBuilder: (context, url, progress) {
                   return Center(
                     child: CircularProgressIndicator(

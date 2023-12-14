@@ -7,6 +7,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:flutter/material.dart' as _i7;
 import 'package:flutter/material.dart';
+import 'package:movies/models/movie.dart' as _i8;
 import 'package:movies/ui/views/navigation/navigation_view.dart' as _i3;
 import 'package:movies/ui/views/startup/startup_view.dart' as _i2;
 import 'package:movies/ui/views/under_construction/under_construction_view.dart'
@@ -15,7 +16,7 @@ import 'package:movies/ui/views/watch/movie_details/movie_details_view.dart'
     as _i6;
 import 'package:movies/ui/views/watch/watch_view.dart' as _i4;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i8;
+import 'package:stacked_services/stacked_services.dart' as _i9;
 
 class Routes {
   static const startupView = '/startup-view';
@@ -87,8 +88,9 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i6.MovieDetailsView: (data) {
+      final args = data.getArgs<MovieDetailsViewArguments>(nullOk: false);
       return _i7.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i6.MovieDetailsView(),
+        builder: (context) => _i6.MovieDetailsView(args.movie, key: args.key),
         settings: data,
       );
     },
@@ -101,7 +103,34 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-extension NavigatorStateExtension on _i8.NavigationService {
+class MovieDetailsViewArguments {
+  const MovieDetailsViewArguments({
+    required this.movie,
+    this.key,
+  });
+
+  final _i8.Movie movie;
+
+  final _i7.Key? key;
+
+  @override
+  String toString() {
+    return '{"movie": "$movie", "key": "$key"}';
+  }
+
+  @override
+  bool operator ==(covariant MovieDetailsViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.movie == movie && other.key == key;
+  }
+
+  @override
+  int get hashCode {
+    return movie.hashCode ^ key.hashCode;
+  }
+}
+
+extension NavigatorStateExtension on _i9.NavigationService {
   Future<dynamic> navigateToStartupView([
     int? routerId,
     bool preventDuplicates = true,
@@ -158,14 +187,17 @@ extension NavigatorStateExtension on _i8.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToMovieDetailsView([
+  Future<dynamic> navigateToMovieDetailsView({
+    required _i8.Movie movie,
+    _i7.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.movieDetailsView,
+        arguments: MovieDetailsViewArguments(movie: movie, key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -228,14 +260,17 @@ extension NavigatorStateExtension on _i8.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithMovieDetailsView([
+  Future<dynamic> replaceWithMovieDetailsView({
+    required _i8.Movie movie,
+    _i7.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.movieDetailsView,
+        arguments: MovieDetailsViewArguments(movie: movie, key: key),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
