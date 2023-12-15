@@ -36,7 +36,7 @@ class TrailerView extends StackedView<TrailerViewModel> {
                 const Spacer(),
                 FilledButton(
                   onPressed: () {
-                    viewModel.youtubePlayerController.toggleFullScreenMode();
+                    viewModel.onExitFullScreen();
                   },
                   child: const Text("Done"),
                 ),
@@ -44,9 +44,6 @@ class TrailerView extends StackedView<TrailerViewModel> {
             ),
             builder: (context, player) {
               return player;
-            },
-            onExitFullScreen: () {
-              viewModel.onExitFullScreen();
             },
           );
   }
@@ -63,6 +60,7 @@ class TrailerView extends StackedView<TrailerViewModel> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive,
         overlays: SystemUiOverlay.values);
     SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
+
     super.onViewModelReady(viewModel);
   }
 }
