@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/models/genre.dart';
@@ -64,10 +65,46 @@ class MovieDetailsView extends StackedView<MovieDetailsViewModel> {
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.greyColor,
                       ),
-                )
+                ),
+                20.verticalSpace,
+                Text(
+                  "Image Gallery",
+                  style: Theme.of(context).textTheme.headlineLarge,
+                ),
+                if (viewModel.imagesLoading)
+                  const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  )
+                else if (viewModel.images?.isEmpty == true)
+                  const Center(
+                    child: Text("No Images Found"),
+                  )
               ],
             ),
           ),
+          if (viewModel.images != null)
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              sliver: SliverGrid.builder(
+                itemCount: viewModel.images!.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 1.2),
+                itemBuilder: (context, index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        image: DecorationImage(
+                          image: CachedNetworkImageProvider(
+                              viewModel.images![index]),
+                          fit: BoxFit.cover,
+                        )),
+                  );
+                },
+              ),
+            )
         ],
       ),
     );
@@ -95,6 +132,7 @@ class MovieDetailsView extends StackedView<MovieDetailsViewModel> {
   @override
   void onViewModelReady(MovieDetailsViewModel viewModel) {
     viewModel.getMovieTrailer(movie.id);
+    viewModel.getMovieImages(movie.id);
     super.onViewModelReady(viewModel);
   }
 }
