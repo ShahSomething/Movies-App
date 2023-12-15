@@ -25,10 +25,7 @@ class TrailerViewModel extends BaseViewModel {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: SystemUiOverlay.values);
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    if (!backCalled) {
-      _navigationService.back();
-      backCalled = true;
-    }
+    _navigationService.back();
   }
 
   @override
