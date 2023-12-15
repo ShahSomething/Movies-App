@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/app/app.bottomsheets.dart';
 import 'package:movies/app/app.dialogs.dart';
@@ -15,7 +14,6 @@ Future<void> main() async {
   setupDialogUi();
   setupBottomSheetUi();
   setupSnackbarUi();
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MainApp());
 }
 

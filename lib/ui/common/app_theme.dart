@@ -38,7 +38,7 @@ class AppTheme {
         textStyle: GoogleFonts.poppins(
           color: AppColors.whiteColor,
           fontWeight: FontWeight.w600,
-          fontSize: 14.sp,
+          fontSize: 14,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.r),
@@ -46,41 +46,41 @@ class AppTheme {
       ),
     ),
     textTheme: GoogleFonts.poppinsTextTheme(
-      TextTheme(
+      const TextTheme(
         displayLarge: TextStyle(
           color: AppColors.blackColor,
           fontWeight: FontWeight.w800,
-          fontSize: 32.sp,
+          fontSize: 32,
         ),
         displayMedium: TextStyle(
           color: AppColors.blackColor,
           fontWeight: FontWeight.w800,
-          fontSize: 24.sp,
+          fontSize: 24,
         ),
         displaySmall: TextStyle(
           color: AppColors.blackColor,
           fontWeight: FontWeight.w600,
-          fontSize: 20.sp,
+          fontSize: 20,
         ),
         headlineLarge: TextStyle(
           color: AppColors.blackColor,
           fontWeight: FontWeight.w600,
-          fontSize: 16.sp,
+          fontSize: 16,
         ),
         bodyLarge: TextStyle(
           color: AppColors.blackColor,
           fontWeight: FontWeight.w600,
-          fontSize: 14.sp,
+          fontSize: 14,
         ),
         bodyMedium: TextStyle(
           color: AppColors.blackColor,
           fontWeight: FontWeight.w400,
-          fontSize: 14.sp,
+          fontSize: 14,
         ),
         bodySmall: TextStyle(
           color: AppColors.blackColor,
           fontWeight: FontWeight.w400,
-          fontSize: 12.sp,
+          fontSize: 12,
         ),
       ),
     ),
@@ -106,7 +106,7 @@ class AppTheme {
         textStyle: GoogleFonts.poppins(
           color: AppColors.whiteColor,
           fontWeight: FontWeight.w600,
-          fontSize: 14.sp,
+          fontSize: 14,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.r),
@@ -128,7 +128,7 @@ class AppTheme {
       labelStyle: GoogleFonts.poppins(
         color: AppColors.whiteColor,
         fontWeight: FontWeight.w400,
-        fontSize: 12.sp,
+        fontSize: 12,
       ),
       selectedColor: AppColors.primaryColor,
     ),
